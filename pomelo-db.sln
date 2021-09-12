@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.Dlinq", "src\Po
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.Dlinq.Tests", "test\Pomelo.Data.Dlinq.Tests\Pomelo.Data.Dlinq.Tests.csproj", "{DCAE070D-33E3-4343-8AD4-C315C47FD250}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomelo.Data.PomeloDB.Lite", "src\Pomelo.Data.PomeloDB.Lite\Pomelo.Data.PomeloDB.Lite.csproj", "{EB56FBE9-164C-491F-B06F-EC1941FAFB48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{DCAE070D-33E3-4343-8AD4-C315C47FD250}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCAE070D-33E3-4343-8AD4-C315C47FD250}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCAE070D-33E3-4343-8AD4-C315C47FD250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB56FBE9-164C-491F-B06F-EC1941FAFB48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB56FBE9-164C-491F-B06F-EC1941FAFB48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB56FBE9-164C-491F-B06F-EC1941FAFB48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB56FBE9-164C-491F-B06F-EC1941FAFB48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{F3935DBC-2BF1-4142-88D2-FD7C15A907AF} = {ECD2F36E-FD29-405B-8823-E2EE9329E7E5}
 		{AF098772-39BC-4055-B23B-059901039A60} = {ECD2F36E-FD29-405B-8823-E2EE9329E7E5}
 		{DCAE070D-33E3-4343-8AD4-C315C47FD250} = {124C4E29-6BE3-4163-9BA1-F523FCBA1F33}
+		{EB56FBE9-164C-491F-B06F-EC1941FAFB48} = {ECD2F36E-FD29-405B-8823-E2EE9329E7E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E065EEA7-A4B1-400B-AC16-F83860CF026D}

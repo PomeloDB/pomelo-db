@@ -14,6 +14,10 @@ namespace Pomelo.Data.Serialize.Serializer
 
         ISerializer ISerializer.Next { get => _next; set => _next = value; }
 
+        public virtual bool IsFlexLength => false;
+
+        public virtual int DefaultLength => Marshal.SizeOf<T>();
+
         public abstract T GetValue(ReadOnlySpan<byte> value, IEnumerable<Attribute> attributes = null);
 
         public abstract void WriteBytes(T value, Span<byte> destination, IEnumerable<Attribute> attributes = null);

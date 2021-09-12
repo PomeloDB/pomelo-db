@@ -83,7 +83,7 @@ namespace Pomelo.Data.Dlinq
             return parsers[string.Empty];
         }
 
-        internal IQueryable GetCollection(string name)
+        public virtual IQueryable GetCollection(string name)
         {
             if (collections.ContainsKey(name))
             {

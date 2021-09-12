@@ -10,6 +10,8 @@ namespace Pomelo.Data.Serialize.Serializer
         void WriteBytes(object value, Span<byte> destination, IEnumerable<Attribute> attributes = null);
         object GetValue(ReadOnlySpan<byte> value, IEnumerable<Attribute> attributes = null);
         int CalculateLength(object value, IEnumerable<Attribute> attributes = null);
+        bool IsFlexLength { get; }
+        int DefaultLength { get; }
         bool IsLengthValid(int length);
     }
 }

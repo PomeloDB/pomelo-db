@@ -23,6 +23,18 @@ namespace Pomelo.Data.Serialize.Dynamic
         }
 
         public void AddProperty<T>(
+            string name,
+            IEnumerable<Attribute> attributes = null,
+            Func<object, object> getter = null,
+            MethodAttributes getterAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig,
+            Action<object, object> setter = null,
+            MethodAttributes setterAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig)
+        {
+            AddProperty(typeof(T), name, attributes, getter, getterAttributes, setter, setterAttributes);
+        }
+
+        public void AddProperty(
+            Type type,
             string name, 
             IEnumerable<Attribute> attributes = null,
             Func<object, object> getter = null, 
@@ -30,7 +42,6 @@ namespace Pomelo.Data.Serialize.Dynamic
             Action<object, object> setter = null, 
             MethodAttributes setterAttributes = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig)
         {
-            var type = typeof(T);
             var fieldBuilder = _typeBuilder.DefineField("_" + name, type, FieldAttributes.Private);
             var getterBuilder = _typeBuilder.DefineMethod("get_" + name, getterAttributes, type, null);
             var setterBuilder = _typeBuilder.DefineMethod("set_" + name, setterAttributes, null, new Type[] { type });

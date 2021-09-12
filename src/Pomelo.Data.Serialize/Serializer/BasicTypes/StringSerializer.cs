@@ -7,6 +7,8 @@ namespace Pomelo.Data.Serialize.Serializer
 {
     public class StringSerializer : SerializerBase<string>
     {
+        public override bool IsFlexLength => true;
+
         public override string GetValue(ReadOnlySpan<byte> value, IEnumerable<Attribute> attributes = null)
         {
             var encodingAttribute = attributes.SingleOrDefault(x => x is EncodingAttribute);

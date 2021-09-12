@@ -19,11 +19,10 @@ namespace Pomelo.Data.Serialize.Definition
             _cache = new Dictionary<Type, List<ModelDefinition>>();
         }
 
-        public virtual IEnumerable<ModelDefinition> GetDefinition(object obj)
+        public virtual IEnumerable<ModelDefinition> GetDefinition(Type type)
         {
-            var type = obj.GetType();
             if (_cache.ContainsKey(type))
-            { 
+            {
                 return _cache[type];
             }
 
@@ -40,6 +39,16 @@ namespace Pomelo.Data.Serialize.Definition
 
             _cache[type] = ret.OrderBy(x => x.Order).ToList();
             return _cache[type];
+        }
+
+        public IEnumerable<ModelDefinition> GetDefinition(object obj)
+        {
+            return GetDefinition(obj.GetType());
+        }
+
+        public IEnumerable<ModelDefinition> GetDefinition<T>()
+        {
+            return GetDefinition(typeof(T));
         }
 
         protected virtual ModelDefinition GetPropertyDefinition(PropertyInfo property)
@@ -66,7 +75,7 @@ namespace Pomelo.Data.Serialize.Definition
             {
                 propertyType = propertyType.GetEnumUnderlyingType();
             }
-            definition.ClrType = propertyType.Name;
+            definition.ClrType = propertyType.AssemblyQualifiedName;
 
             if (!_resolver.IsTypeRegistered(propertyType))
             {
@@ -114,7 +123,7 @@ namespace Pomelo.Data.Serialize.Definition
             attributes = attributes.Where(x => x.GetType().GetInterfaces().Contains(typeof(ISerializeOptionAttribute)));
             foreach (var attribute in attributes)
             {
-                ret.Add(attribute.GetType().Name, ParseAttributeInfo(attribute));
+                ret.Add(attribute.GetType().AssemblyQualifiedName, ParseAttributeInfo(attribute));
             }
 
             return ret;

@@ -100,5 +100,37 @@ namespace Pomelo.Data.Serialize.Tests
             // Assert
             Assert.Equal(12, BitConverter.ToInt32(buffer));
         }
+
+        [Fact]
+        public void DeserializeTests()
+        {
+            // Arrange
+            var obj = new Fixtures.TestClass
+            {
+                Name = "Yuko",
+                Items = new List<string>
+                {
+                    "123",
+                    "4567",
+                    "89012"
+                },
+                Age = 12
+            };
+            var resolver = new Serializer.SerializerResolver();
+            resolver.AddBasicSerializers();
+            var parser = new Definition.ModelDefinitionParser(resolver);
+            var serializer = new Serializer.Serializer<Fixtures.TestClass>(parser, resolver);
+            var len = serializer.CalculateLength(obj);
+            var buffer = new Span<byte>(new byte[len]);
+            var bytesWritten = serializer.Serialize(obj, buffer);
+            var deserializer = new Serializer.Deserializer(parser, resolver);
+            var definitions = parser.GetDefinition(obj);
+
+            // Act
+            var deserializedObject = deserializer.Deserialize(buffer, definitions);
+
+            // Assert
+            Assert.NotNull(deserializedObject);
+        }
     }
 }
