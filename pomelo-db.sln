@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31423.177
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.Serialize", "src\Pomelo.Data.Serialize\Pomelo.Data.Serialize.csproj", "{9A2DC23F-5663-4422-8261-A2F66DB0379C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ECD2F36E-FD29-405B-8823-E2EE9329E7E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{124C4E29-6BE3-4163-9BA1-F523FCBA1F33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.Serialize.Tests", "test\Pomelo.Data.Serialize.Tests\Pomelo.Data.Serialize.Tests.csproj", "{C57577E6-4BC2-4E83-905C-F907803C2E30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.PomeloDB.Server", "src\Pomelo.Data.PomeloDB.Server\Pomelo.Data.PomeloDB.Server.csproj", "{F3935DBC-2BF1-4142-88D2-FD7C15A907AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.Dlinq", "src\Pomelo.Data.Dlinq\Pomelo.Data.Dlinq.csproj", "{AF098772-39BC-4055-B23B-059901039A60}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.Dlinq.Tests", "test\Pomelo.Data.Dlinq.Tests\Pomelo.Data.Dlinq.Tests.csproj", "{DCAE070D-33E3-4343-8AD4-C315C47FD250}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A2DC23F-5663-4422-8261-A2F66DB0379C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A2DC23F-5663-4422-8261-A2F66DB0379C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A2DC23F-5663-4422-8261-A2F66DB0379C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A2DC23F-5663-4422-8261-A2F66DB0379C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57577E6-4BC2-4E83-905C-F907803C2E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57577E6-4BC2-4E83-905C-F907803C2E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57577E6-4BC2-4E83-905C-F907803C2E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C57577E6-4BC2-4E83-905C-F907803C2E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3935DBC-2BF1-4142-88D2-FD7C15A907AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3935DBC-2BF1-4142-88D2-FD7C15A907AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3935DBC-2BF1-4142-88D2-FD7C15A907AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3935DBC-2BF1-4142-88D2-FD7C15A907AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF098772-39BC-4055-B23B-059901039A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF098772-39BC-4055-B23B-059901039A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF098772-39BC-4055-B23B-059901039A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF098772-39BC-4055-B23B-059901039A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCAE070D-33E3-4343-8AD4-C315C47FD250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCAE070D-33E3-4343-8AD4-C315C47FD250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCAE070D-33E3-4343-8AD4-C315C47FD250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCAE070D-33E3-4343-8AD4-C315C47FD250}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A2DC23F-5663-4422-8261-A2F66DB0379C} = {ECD2F36E-FD29-405B-8823-E2EE9329E7E5}
+		{C57577E6-4BC2-4E83-905C-F907803C2E30} = {124C4E29-6BE3-4163-9BA1-F523FCBA1F33}
+		{F3935DBC-2BF1-4142-88D2-FD7C15A907AF} = {ECD2F36E-FD29-405B-8823-E2EE9329E7E5}
+		{AF098772-39BC-4055-B23B-059901039A60} = {ECD2F36E-FD29-405B-8823-E2EE9329E7E5}
+		{DCAE070D-33E3-4343-8AD4-C315C47FD250} = {124C4E29-6BE3-4163-9BA1-F523FCBA1F33}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E065EEA7-A4B1-400B-AC16-F83860CF026D}
+	EndGlobalSection
+EndGlobal
