@@ -1,6 +1,6 @@
 # DLINQ
 
-DLINQ is a text-based query language. It can be used for accessing data from `IEnumerable`/`IQueryable` interfaces. 
+DLINQ is a text-based query language which provided by Pomelo. It can be used for accessing data from `IEnumerable`/`IQueryable` interfaces. 
 
 ## Query Command
 A query command is consisted of `subject` and commands. A query command should start with the subject. Usually the subject is the name of table. 
