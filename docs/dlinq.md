@@ -6,7 +6,7 @@ DLINQ is a text-based query language which provided by Pomelo. It can be used fo
 A query command is consisted of `subject` and commands. A query command should start with the subject. Usually the subject is the name of table. 
 And each command starts with `|`, command name is placed after `|`. 
 
-Here is a sample for DLINQ:
+Here is a sample for DLINQ(Text-based):
 
 ``` ql
 Logs // subject
