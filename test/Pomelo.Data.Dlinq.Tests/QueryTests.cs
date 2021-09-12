@@ -135,5 +135,23 @@ logs
             Assert.NotNull(result);
             Assert.Equal(Convert.ToDateTime("2021/9/30 15:29:00"), result.Time);
         }
+
+        [Fact]
+        public void OrderByQueryTest()
+        {
+            // Arrange
+            var context = new TestQueryContext();
+
+            // Act
+            var result = context.ExecuteSingleCommand(@"
+logs
+| orderby severity, time desc");
+            var wrapped = DynamicEnumerableExtensions.ToDynamicList(result);
+
+            // Assert
+            Assert.True(wrapped[0].Time > wrapped[1].Time);
+            Assert.True(wrapped[1].Time > wrapped[2].Time);
+            Assert.True(wrapped[0].Severity < wrapped[4].Severity);
+        }
     }
 }

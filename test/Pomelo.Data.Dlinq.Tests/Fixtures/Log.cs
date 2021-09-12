@@ -6,6 +6,8 @@ namespace Pomelo.Data.Dlinq.Tests.Fixtures
     {
         public DateTime Time { get; set; } = DateTime.UtcNow;
 
+        public int Severity { get; set; }
+
         public string Message { get; set; }
     }
 }

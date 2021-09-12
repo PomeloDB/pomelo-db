@@ -36,11 +36,11 @@ namespace Pomelo.Data.Dlinq.Tests.Fixtures
 
             Logs = new List<Log>
             {
-                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-01 05:29") },
-                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-04 11:15") },
-                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-15 19:12") },
-                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-24 02:56") },
-                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-30 15:29") },
+                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-01 05:29"), Severity = 1 },
+                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-04 11:15"), Severity = 2 },
+                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-15 19:12"), Severity = 1 },
+                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-24 02:56"), Severity = 2 },
+                new Log { Message = Guid.NewGuid().ToString(), Time = Convert.ToDateTime("2021-09-30 15:29"), Severity = 1 },
             }
             .AsQueryable();
         }

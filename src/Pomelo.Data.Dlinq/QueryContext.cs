@@ -70,6 +70,7 @@ namespace Pomelo.Data.Dlinq
             RegisterParser("GroupJoin", new GroupJoinCommandParser());
             RegisterParser("Skip", new SkipCommandParser());
             RegisterParser("Take", new TakeCommandParser());
+            RegisterParser("OrderBy", new OrderByCommandParser());
         }
 
         internal ICommandParser GetCommandParser(string method)
