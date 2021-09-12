@@ -9,11 +9,11 @@ And each command starts with `|`, command name is placed after `|`.
 Here is a sample for DLINQ:
 
 ``` ql
-Logs
-| where time >= Convert.ToDateTime("2021-09-12")
-| where server == "127.0.0.1"
-| groupby severity
-| select new(severity as Sev, Count() as Count)
+Logs // subject
+| where time >= Convert.ToDateTime("2021-09-12") // command
+| where server == "127.0.0.1" // command
+| groupby severity // command
+| select new(severity as Sev, Count() as Count) // command
 ```
 
 We can use most of the methods which provided by `dynamic-linq` as the command name. And use `,` to split arguments. 
