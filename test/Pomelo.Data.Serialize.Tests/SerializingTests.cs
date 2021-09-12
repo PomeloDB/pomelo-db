@@ -122,7 +122,7 @@ namespace Pomelo.Data.Serialize.Tests
             var serializer = new Serializer.Serializer<Fixtures.TestClass>(parser, resolver);
             var len = serializer.CalculateLength(obj);
             var buffer = new Span<byte>(new byte[len]);
-            var bytesWritten = serializer.Serialize(obj, buffer);
+            serializer.Serialize(obj, buffer);
             var deserializer = new Serializer.Deserializer(parser, resolver);
             var definitions = parser.GetDefinition(obj);
 
