@@ -16,7 +16,7 @@ Logs // subject
 | select new(severity as Sev, Count() as Count) // command
 ```
 
-The above `DLINQ` will be compiled into `Dynamic LINQ` as below:
+The above `DLINQ` will be compiled into `Dynamic LINQ` at runtime as below:
 
 ```c#
 queryContext.Logs
@@ -26,7 +26,7 @@ queryContext.Logs
     .Select("new(severity as Sev, Count() as Count)")
 ```
 
-The `Dynamic LINQ` will be compiled into native `LINQ` as below:
+Then the `Dynamic LINQ` will be compiled into native `LINQ` at runtime as below:
 
 ```c#
 queryContext.Logs
