@@ -16,6 +16,26 @@ Logs // subject
 | select new(severity as Sev, Count() as Count) // command
 ```
 
+The above `DLINQ` will be compiled into `Dynamic LINQ` as below:
+
+```c#
+queryContext.Logs
+    .Where("time >= Convert.ToDateTime(\"2021-09-12\")")
+    .Where("server == \"127.0.0.1\"")
+    .GroupBy("severity")
+    .Select("new(severity as Sev, Count() as Count)")
+```
+
+The `Dynamic LINQ` will be compiled into native `LINQ` as below:
+
+```c#
+queryContext.Logs
+    .Where(x => x.Time >= Convert.ToDateTime("2021-09-12"))
+    .Where(x => x.Server == "127.0.0.1")
+    .GroupBy(x => x.Severity)
+    .Select(x => new { Sev = x.Severity, Count = x.Count() });
+```
+
 We can use most of the methods which provided by `dynamic-linq` as the command name. And use `,` to split arguments. 
 You can refer to [Dynamic LINQ documents](https://dynamic-linq.net/basic-query-operators) to learn the method definitions.
 
