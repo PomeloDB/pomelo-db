@@ -41,7 +41,9 @@ namespace Pomelo.Data.PomeloDB.Lite
         {
             foreach (var x in devices)
             {
-                x.Value.Device.Dispose();
+                x.Value.Logger?.Dispose();
+                x.Value.Device?.Close();
+                x.Value.Device?.Dispose();
             }
         }
 
