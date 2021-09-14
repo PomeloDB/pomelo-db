@@ -23,4 +23,16 @@
     <ProjectReference Include="..\..\src\Pomelo.Data.PomeloDB.Lite\Pomelo.Data.PomeloDB.Lite.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Fixtures\TestDB\log-commits\commit.0.0">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Fixtures\TestDB\test1.fdb.0">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Fixtures\TestDB\test1.fdb.def">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
