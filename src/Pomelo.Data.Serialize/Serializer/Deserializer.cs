@@ -42,46 +42,9 @@ namespace Pomelo.Data.Serialize.Serializer
 
         private static Dictionary<string, Type> dynamicTypeCache = new Dictionary<string, Type>();
 
-        public static string ComputeModelDefinitionHash(IEnumerable<ModelPropertyDefinition> definitions)
-        {
-            var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(definitions));
-            var hash = Sha256.ComputeHash(bytes);
-            return Convert.ToBase64String(hash);
-        }
-
-        public static Type GetOrCreateTypeFromDefinition(IEnumerable<ModelPropertyDefinition> definitions)
-        {
-            var hash = ComputeModelDefinitionHash(definitions);
-
-            if (!dynamicTypeCache.ContainsKey(hash))
-            {
-                var type = container.CreateClass("dynamic_" + Guid.NewGuid().ToString().Replace("-", ""));
-
-                foreach (var def in definitions)
-                {
-                    var t = Type.GetType(def.ClrType);
-                    if (def.IsEnumerable)
-                    {
-                        var t2 = typeof(List<>);
-                        var t3 = t2.MakeGenericType(t);
-                        type.AddProperty(t3, def.Name, ActivateAttributes(def.Attributes));
-                    }
-                    else
-                    {
-                        type.AddProperty(t, def.Name, ActivateAttributes(def.Attributes));
-                    }
-                }
-
-                dynamicTypeCache[hash] = type.Build();
-            }
-
-            return dynamicTypeCache[hash];
-
-        }
-
         public object Deserialize(Span<byte> source, ModelDefinition definition)
         {
-            var type = GetOrCreateTypeFromDefinition(definition.Properties);
+            var type = Serializer.GetOrCreateTypeFromDefinition(definition);
             return Deserialize(type, source);
         }
 

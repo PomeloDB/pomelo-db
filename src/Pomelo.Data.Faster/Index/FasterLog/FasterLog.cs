@@ -304,7 +304,7 @@ namespace Pomelo.Data.Faster
         }
         #endregion
 
-        #region UnsafeReplace
+        #region Replace
         /// <summary>
         /// Try to replace existed data
         /// </summary>
@@ -321,6 +321,25 @@ namespace Pomelo.Data.Faster
             {
                 SetHeader(entry.Length, (byte*)physicalAddress);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <param name="logicalAddress"></param>
+        public unsafe void Replace(ReadOnlySpan<byte> entry, long logicalAddress)
+        {
+            var physicalAddress = allocator.GetPhysicalAddress(logicalAddress);
+            var length = GetLength((byte*)physicalAddress);
+            if (length != entry.Length)
+            {
+                throw new InvalidDataException($"Expected data length = {length}, actual is {entry.Length} ");
+            }
+
+            fixed (byte* bp = &entry.GetPinnableReference())
+                Buffer.MemoryCopy(bp, (void*)(headerSize + physicalAddress), entry.Length, entry.Length);
+
         }
         #endregion
 
@@ -1379,6 +1398,12 @@ namespace Pomelo.Data.Faster
                 *(int*)(dest + 8) = length;
                 *(ulong*)dest = Utility.XorBytes(dest + 8, length + 4);
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe int GetHeader(byte* dest)
+        {
+            return *(int*)dest;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

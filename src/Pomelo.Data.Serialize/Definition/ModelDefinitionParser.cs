@@ -13,6 +13,8 @@ namespace Pomelo.Data.Serialize.Definition
         private SerializerResolver _resolver;
         private Dictionary<Type, ModelDefinition> _cache;
 
+        public SerializerResolver Resolver => _resolver;
+
         public ModelDefinitionParser(SerializerResolver resolver)
         {
             _resolver = resolver;
@@ -85,22 +87,26 @@ namespace Pomelo.Data.Serialize.Definition
                 return null;
             }
 
-            // Parsing Length
+
+            // Check Length
+            if (!_resolver.CanResolve(propertyType, definition.Length))
+            {
+                return null;
+            }
+
             definition.Length = -1;
             var fixedLengthAttribute = property.GetCustomAttribute<FixedLengthAttribute>();
             if (fixedLengthAttribute != null)
             {
                 definition.Length = fixedLengthAttribute.Length;
             }
-            else if (propertyType.IsValueType && TryGetTypeSize(propertyType, out var length))
+            else if (propertyType.IsValueType)
             {
-                definition.Length = length;
-            }
-
-            // Check Length
-            if (!_resolver.CanResolve(propertyType, definition.Length))
-            {
-                return null;
+                var len = _resolver.ResolveSerializer(propertyType).DefaultLength;
+                if (len > 0)
+                {
+                    definition.Length = len;
+                }
             }
 
             // Parsing Order

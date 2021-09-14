@@ -5,9 +5,6 @@ namespace Pomelo.Data.Serialize.Serializer
 {
     public class Deserializer<T> : Deserializer
     {
-        private ModelDefinitionParser _parser;
-        private SerializerResolver _resolver;
-
         public Deserializer(ModelDefinitionParser parser, SerializerResolver resolver) : base(parser, resolver)
         { 
         }

@@ -13,6 +13,7 @@ namespace Pomelo.Data.PomeloDB.Lite
         private ModelDefinition _definition;
 
         private object _current = null;
+        private long _logicalAddress = -1;
 
         public FasterEnumerator(
             FasterLogScanIterator fasterLogScanIterator,
@@ -25,6 +26,8 @@ namespace Pomelo.Data.PomeloDB.Lite
         }
 
         public object Current => _current;
+
+        public long CurrentLogicalAddress => _logicalAddress;
 
         object IEnumerator.Current => _current;
 
@@ -43,7 +46,8 @@ namespace Pomelo.Data.PomeloDB.Lite
                         continue;
                     }
 
-                    _current = _deserializer.Deserialize(new Span<byte>(next).Slice(1, length), _definition);
+                    _logicalAddress = addr;
+                    _current = _deserializer.Deserialize(new Span<byte>(next).Slice(1, length - 1), _definition);
                     return true;
                 }
 

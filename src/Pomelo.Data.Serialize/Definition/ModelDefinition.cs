@@ -6,6 +6,6 @@ namespace Pomelo.Data.Serialize.Definition
     {
         public string Name { get; set; }
 
-        public IEnumerable<ModelPropertyDefinition> Properties { get; internal set; }
+        public IEnumerable<ModelPropertyDefinition> Properties { get; set; }
     }
 }

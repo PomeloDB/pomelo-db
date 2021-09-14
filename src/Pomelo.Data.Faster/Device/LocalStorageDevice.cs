@@ -154,6 +154,11 @@ namespace Pomelo.Data.Faster
             List<int> segids = new();
             foreach (System.IO.FileInfo item in di.GetFiles(bareName + "*"))
             {
+                if (item.Name.EndsWith(".def"))
+                {
+                    continue;
+                }
+
                 segids.Add(int.Parse(item.Name.Replace(bareName, "").Replace(".", "")));
             }
             segids.Sort();

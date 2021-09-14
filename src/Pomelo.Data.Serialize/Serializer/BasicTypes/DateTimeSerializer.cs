@@ -30,5 +30,7 @@ namespace Pomelo.Data.Serialize.Serializer
         {
             return sizeof(long);
         }
+
+        public override int DefaultLength => sizeof(long);
     }
 }

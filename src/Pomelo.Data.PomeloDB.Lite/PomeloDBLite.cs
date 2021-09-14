@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -13,17 +14,28 @@ namespace Pomelo.Data.PomeloDB.Lite
     public class PomeloDBLite : QueryContext, IDisposable
     {
         private Deserializer _deserializer;
+        private Serializer _serializer;
+        private ModelDefinitionParser _parser;
+        private Dictionary<string, FasterDevice> devices = new Dictionary<string, FasterDevice>(StringComparer.OrdinalIgnoreCase);
+        private static Type _enumerableGenericType = typeof(FasterEnumerable<>);
 
-        public SerializerResolver Resolver { get; private set; }
+        public SerializerResolver Resolver => _parser.Resolver;
+
+        public PomeloDBLite()
+        {
+            _parser = new ModelDefinitionParser(new SerializerResolver());
+            Resolver.AddBasicSerializers();
+            _deserializer = new Deserializer(_parser, Resolver);
+            _serializer = new Serializer(_parser, Resolver);
+        }
 
         public PomeloDBLite(ModelDefinitionParser parser)
         {
-            Resolver = new SerializerResolver();
+            _parser = parser;
             Resolver.AddBasicSerializers();
             _deserializer = new Deserializer(parser, Resolver);
+            _serializer = new Serializer(_parser, Resolver);
         }
-
-        private Dictionary<string, FasterDevice> devices = new Dictionary<string, FasterDevice>();
 
         public void Dispose()
         {
@@ -43,38 +55,54 @@ namespace Pomelo.Data.PomeloDB.Lite
             return devices[name];
         }
 
-        public IQueryable GetCollection(string name, bool createIfNotExist)
+        public bool IsCollectionExisted(string name)
         {
-            if (!createIfNotExist)
+            if (!File.Exists(name + ".def"))
             {
-                return GetCollection(name);
+                return false;
             }
 
-            var recover = false;
-            if (File.Exists(name + ".0"))
+            return true;
+        }
+
+        public void CreateCollection(string name, ModelDefinition definition)
+        { 
+            if (IsCollectionExisted(name))
             {
-                recover = true;
+                throw new InvalidOperationException($"The collection {name} is already existed.");
             }
 
-            var device = Devices.CreateLogDevice(name, recoverDevice: recover, useIoCompletionPort: true);
-            var fasterLog = new FasterLog(new FasterLogSettings { LogDevice = device });
-            devices[name] = new FasterDevice { Device = device, Logger = fasterLog };
-            var iter = fasterLog.Scan(fasterLog.BeginAddress, fasterLog.TailAddress);
-            return new FasterEnumerable(iter, _deserializer, LoadDefinitionFromText(File.ReadAllText(name + ".def"))).AsQueryable();
+            File.WriteAllText(name + ".def", JsonConvert.SerializeObject(definition));
         }
 
         public override IQueryable GetCollection(string name)
         {
-            if (!File.Exists(name + ".0") || !File.Exists(name + ".def"))
+            if (!IsCollectionExisted(name))
             {
                 throw new FileNotFoundException($"Faster storage device {name} has not been found.");
             }
 
-            var device = Devices.CreateLogDevice(name, recoverDevice: true, useIoCompletionPort: true);
-            var fasterLog = new FasterLog(new FasterLogSettings { LogDevice = device });
-            devices[name] = new FasterDevice { Device = device, Logger = fasterLog };
-            var iter = fasterLog.Scan(fasterLog.BeginAddress, fasterLog.TailAddress);
-            return new FasterEnumerable(iter, _deserializer, LoadDefinitionFromText(File.ReadAllText(name + ".def"))).AsQueryable();
+            if (!devices.ContainsKey(name))
+            {
+                var device = Devices.CreateLogDevice(name, recoverDevice: true, useIoCompletionPort: true);
+                var fasterLog = new FasterLog(new FasterLogSettings { LogDevice = device });
+                devices[name] = new FasterDevice { Device = device, Logger = fasterLog, Deserializer = _deserializer, Serializer = _serializer, Parser = _parser };
+            }
+            var fasterDevice = devices[name].Logger;
+            var iter = fasterDevice.Scan(fasterDevice.BeginAddress, fasterDevice.TailAddress);
+            var def = LoadDefinitionFromText(File.ReadAllText(name + ".def"));
+            var type = _enumerableGenericType.MakeGenericType(Serializer.GetOrCreateTypeFromDefinition(def));
+            return ((IEnumerable)Activator.CreateInstance(type, iter, _deserializer, def)).AsQueryable();
+        }
+
+        public FasterDevice GetCollectionDevice(string name)
+        {
+            if (!IsCollectionExisted(name))
+            {
+                throw new FileNotFoundException($"Faster storage device {name} has not been found.");
+            }
+
+            return devices[name];
         }
 
         private ModelDefinition LoadDefinitionFromText(string text)
