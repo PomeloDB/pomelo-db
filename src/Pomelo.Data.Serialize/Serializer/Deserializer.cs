@@ -42,14 +42,14 @@ namespace Pomelo.Data.Serialize.Serializer
 
         private static Dictionary<string, Type> dynamicTypeCache = new Dictionary<string, Type>();
 
-        public static string ComputeModelDefinitionHash(IEnumerable<ModelDefinition> definitions)
+        public static string ComputeModelDefinitionHash(IEnumerable<ModelPropertyDefinition> definitions)
         {
             var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(definitions));
             var hash = Sha256.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
         }
 
-        public static Type GetOrCreateTypeFromDefinition(IEnumerable<ModelDefinition> definitions)
+        public static Type GetOrCreateTypeFromDefinition(IEnumerable<ModelPropertyDefinition> definitions)
         {
             var hash = ComputeModelDefinitionHash(definitions);
 
@@ -79,9 +79,9 @@ namespace Pomelo.Data.Serialize.Serializer
 
         }
 
-        public object Deserialize(Span<byte> source, IEnumerable<ModelDefinition> definitions)
+        public object Deserialize(Span<byte> source, ModelDefinition definition)
         {
-            var type = GetOrCreateTypeFromDefinition(definitions);
+            var type = GetOrCreateTypeFromDefinition(definition.Properties);
             return Deserialize(type, source);
         }
 
@@ -89,14 +89,14 @@ namespace Pomelo.Data.Serialize.Serializer
         { 
             var obj = Activator.CreateInstance(type);
             var properties = type.GetProperties();
-            var definitions = _parser.GetDefinition(type);
+            var def = _parser.GetDefinition(type);
             var intSerializer = _resolver.ResolveSerializer(typeof(int));
             var len = 0;
-            foreach (var definition in definitions)
+            foreach (var propertyDef in def.Properties)
             {
-                var property = properties.Single(x => x.Name == definition.Name);
+                var property = properties.Single(x => x.Name == propertyDef.Name);
                 var attributes = property.GetCustomAttributes(true).Select(x => x as Attribute);
-                if (definition.IsEnumerable)
+                if (propertyDef.IsEnumerable)
                 {
                     var propertyValue = Activator.CreateInstance(property.PropertyType);
                     property.SetValue(obj, propertyValue);

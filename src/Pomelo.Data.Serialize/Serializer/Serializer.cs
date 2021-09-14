@@ -23,18 +23,18 @@ namespace Pomelo.Data.Serialize.Serializer
         public int CalculateLength(Type type, object obj)
         {
             var len = 0;
-            var definitions = _parser.GetDefinition(type);
+            var def = _parser.GetDefinition(type);
             var properties = type.GetProperties();
-            foreach (var definition in definitions)
+            foreach (var propertyDef in def.Properties)
             {
-                var property = properties.Single(x => x.Name == definition.Name);
+                var property = properties.Single(x => x.Name == propertyDef.Name);
                 var propertyInstance = (dynamic)property.GetValue(obj);
-                if (definition.IsEnumerable)
+                if (propertyDef.IsEnumerable)
                 {
                     len += sizeof(int);
                     var count = Enumerable.Count(propertyInstance);
                     
-                    if (definition.Length == -1)
+                    if (propertyDef.Length == -1)
                     {
                         len += sizeof(int) * count;
                     }
@@ -48,7 +48,7 @@ namespace Pomelo.Data.Serialize.Serializer
                 else
                 {
                     var serializer = _resolver.ResolveSerializer(property.PropertyType);
-                    if (definition.Length == -1)
+                    if (propertyDef.Length == -1)
                     {
                         len += sizeof(int);
                     }
@@ -63,15 +63,15 @@ namespace Pomelo.Data.Serialize.Serializer
         {
             var intSerializer = _resolver.ResolveSerializer(typeof(int));
             var len = 0;
-            var definitions = _parser.GetDefinition(obj);
+            var def = _parser.GetDefinition(obj);
             var type = obj.GetType();
             var properties = type.GetProperties();
-            foreach (var definition in definitions)
+            foreach (var propertyDef in def.Properties)
             {
-                var property = properties.Single(x => x.Name == definition.Name);
+                var property = properties.Single(x => x.Name == propertyDef.Name);
                 var propertyInstance = (dynamic)property.GetValue(obj);
                 var attributes = property.GetCustomAttributes(true).Select(x => x as Attribute);
-                if (definition.IsEnumerable)
+                if (propertyDef.IsEnumerable)
                 {
                     int count = Enumerable.Count(propertyInstance);
                     intSerializer.WriteBytes(count, destination.Slice(len), attributes);
@@ -80,7 +80,7 @@ namespace Pomelo.Data.Serialize.Serializer
                     foreach (var item in propertyInstance)
                     {
                         int itemLength = serializer.CalculateLength(item, attributes);
-                        if (definition.Length == -1)
+                        if (propertyDef.Length == -1)
                         {
                             intSerializer.WriteBytes(itemLength, destination.Slice(len), attributes);
                             len += sizeof(int);
@@ -93,7 +93,7 @@ namespace Pomelo.Data.Serialize.Serializer
                 {
                     var serializer = _resolver.ResolveSerializer(property.PropertyType);
                     int itemLength = serializer.CalculateLength(propertyInstance, attributes);
-                    if (definition.Length == -1)
+                    if (propertyDef.Length == -1)
                     {
                         intSerializer.WriteBytes(itemLength, destination.Slice(len), attributes);
                         len += sizeof(int);
@@ -128,14 +128,14 @@ namespace Pomelo.Data.Serialize.Serializer
 
         private static Dictionary<string, Type> dynamicTypeCache = new Dictionary<string, Type>();
 
-        public static string ComputeModelDefinitionHash(IEnumerable<ModelDefinition> definitions)
+        public static string ComputeModelDefinitionHash(IEnumerable<ModelPropertyDefinition> definitions)
         {
             var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(definitions));
             var hash = Sha256.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
         }
 
-        public static Type GetOrCreateTypeFromDefinition(IEnumerable<ModelDefinition> definitions)
+        public static Type GetOrCreateTypeFromDefinition(IEnumerable<ModelPropertyDefinition> definitions)
         {
             var hash = ComputeModelDefinitionHash(definitions);
 

@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.FASTER.Core" Version="1.9.6" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Pomelo.Data.Dlinq\Pomelo.Data.Dlinq.csproj" />
+    <ProjectReference Include="..\Pomelo.Data.Faster\Pomelo.Data.Faster.csproj" />
     <ProjectReference Include="..\Pomelo.Data.Serialize\Pomelo.Data.Serialize.csproj" />
   </ItemGroup>
 

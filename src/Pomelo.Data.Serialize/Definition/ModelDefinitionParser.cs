@@ -11,54 +11,57 @@ namespace Pomelo.Data.Serialize.Definition
     public class ModelDefinitionParser
     {
         private SerializerResolver _resolver;
-        private Dictionary<Type, List<ModelDefinition>> _cache;
+        private Dictionary<Type, ModelDefinition> _cache;
 
         public ModelDefinitionParser(SerializerResolver resolver)
         {
             _resolver = resolver;
-            _cache = new Dictionary<Type, List<ModelDefinition>>();
+            _cache = new Dictionary<Type, ModelDefinition>();
         }
 
-        public virtual IEnumerable<ModelDefinition> GetDefinition(Type type)
+        public virtual ModelDefinition GetDefinition(Type type)
         {
             if (_cache.ContainsKey(type))
             {
                 return _cache[type];
             }
 
+            var def = new ModelDefinition();
+            def.Name = type.Name;
             var properties = type.GetProperties();
-            var ret = new List<ModelDefinition>(properties.Length);
+            var propertyCollection = new List<ModelPropertyDefinition>(properties.Length);
             foreach (var property in properties)
             {
                 var definition = GetPropertyDefinition(property);
                 if (definition != null)
                 {
-                    ret.Add(definition);
+                    propertyCollection.Add(definition);
                 }
             }
 
-            _cache[type] = ret.OrderBy(x => x.Order).ToList();
+            def.Properties = propertyCollection.OrderBy(x => x.Order);
+            _cache[type] = def;
             return _cache[type];
         }
 
-        public IEnumerable<ModelDefinition> GetDefinition(object obj)
+        public ModelDefinition GetDefinition(object obj)
         {
             return GetDefinition(obj.GetType());
         }
 
-        public IEnumerable<ModelDefinition> GetDefinition<T>()
+        public ModelDefinition GetDefinition<T>()
         {
             return GetDefinition(typeof(T));
         }
 
-        protected virtual ModelDefinition GetPropertyDefinition(PropertyInfo property)
+        protected virtual ModelPropertyDefinition GetPropertyDefinition(PropertyInfo property)
         {
             if (property.GetCustomAttribute<IgnoreAttribute>() != null)
             {
                 return null;
             }
 
-            var definition = new ModelDefinition();
+            var definition = new ModelPropertyDefinition();
 
             // Parsing Name
             definition.Name = property.Name;
