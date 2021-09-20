@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.PomeloDB.Lite",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.Faster", "src\Pomelo.Data.Faster\Pomelo.Data.Faster.csproj", "{BF3D4066-7B72-4B11-9210-B28EC4D10DEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomelo.Data.Faster.Tests", "test\Pomelo.Data.Faster.Tests\Pomelo.Data.Faster.Tests.csproj", "{4DEF0FF0-DD00-4B8A-9419-8D0586DC0B9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.Faster.Tests", "test\Pomelo.Data.Faster.Tests\Pomelo.Data.Faster.Tests.csproj", "{4DEF0FF0-DD00-4B8A-9419-8D0586DC0B9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomelo.Data.PomeloDB.Lite.Tests", "test\Pomelo.Data.PomeloDB.Lite.Tests\Pomelo.Data.PomeloDB.Lite.Tests.csproj", "{BB3F06B7-FB72-499C-89EF-5C99094437BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pomelo.Data.PomeloDB.Lite.Tests", "test\Pomelo.Data.PomeloDB.Lite.Tests\Pomelo.Data.PomeloDB.Lite.Tests.csproj", "{BB3F06B7-FB72-499C-89EF-5C99094437BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pomelo.Data.Indexing", "src\Pomelo.Data.Indexing\Pomelo.Data.Indexing.csproj", "{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,14 @@ Global
 		{BB3F06B7-FB72-499C-89EF-5C99094437BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB3F06B7-FB72-499C-89EF-5C99094437BC}.Release|x64.ActiveCfg = Release|Any CPU
 		{BB3F06B7-FB72-499C-89EF-5C99094437BC}.Release|x64.Build.0 = Release|Any CPU
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}.Debug|x64.Build.0 = Debug|Any CPU
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}.Release|x64.ActiveCfg = Release|Any CPU
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -119,6 +129,7 @@ Global
 		{BF3D4066-7B72-4B11-9210-B28EC4D10DEC} = {ECD2F36E-FD29-405B-8823-E2EE9329E7E5}
 		{4DEF0FF0-DD00-4B8A-9419-8D0586DC0B9C} = {124C4E29-6BE3-4163-9BA1-F523FCBA1F33}
 		{BB3F06B7-FB72-499C-89EF-5C99094437BC} = {124C4E29-6BE3-4163-9BA1-F523FCBA1F33}
+		{969E8162-7EB1-4DB2-BBEA-C53D33EF87E8} = {ECD2F36E-FD29-405B-8823-E2EE9329E7E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E065EEA7-A4B1-400B-AC16-F83860CF026D}

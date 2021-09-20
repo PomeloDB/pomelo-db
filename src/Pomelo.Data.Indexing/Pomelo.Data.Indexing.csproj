@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pomelo.Data.Faster\Pomelo.Data.Faster.csproj" />
+    <ProjectReference Include="..\Pomelo.Data.Serialize\Pomelo.Data.Serialize.csproj" />
+  </ItemGroup>
+
+</Project>

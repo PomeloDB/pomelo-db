@@ -154,7 +154,7 @@ namespace Pomelo.Data.Faster
             List<int> segids = new();
             foreach (System.IO.FileInfo item in di.GetFiles(bareName + "*"))
             {
-                if (item.Name.EndsWith(".def"))
+                if (item.Name.EndsWith(".def") || item.Name.EndsWith(".pbt"))
                 {
                     continue;
                 }

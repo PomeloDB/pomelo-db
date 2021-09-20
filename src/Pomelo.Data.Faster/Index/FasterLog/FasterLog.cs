@@ -883,6 +883,11 @@ namespace Pomelo.Data.Faster
             return GetRecordAndFree(ctx.record);
         }
 
+        public (byte[], int) Read(long address, int estimatedLength = 0)
+        {
+            return ReadAsync(address, estimatedLength).Result;
+        }
+
         /// <summary>
         /// Random read record from log as IMemoryOwner&lt;byte&gt;, at given address
         /// </summary>
